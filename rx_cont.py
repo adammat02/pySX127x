@@ -77,11 +77,13 @@ class LoRaRcvCont(LoRa):
         self.reset_ptr_rx()
         self.set_mode(MODE.RXCONT)
         while True:
-            sleep(.5)
+            sleep(0.5)
             rssi_value = self.get_rssi_value()
             status = self.get_modem_status()
             sys.stdout.flush()
-            sys.stdout.write("\r%d %d %d" % (rssi_value, status['rx_ongoing'], status['modem_clear']))
+            sys.stdout.write(
+                "\r%d %d %d" % (rssi_value, status["rx_ongoing"], status["modem_clear"])
+            )
 
 
 lora = LoRaRcvCont(verbose=False)
@@ -89,20 +91,22 @@ args = parser.parse_args(lora)
 
 lora.set_mode(MODE.STDBY)
 lora.set_pa_config(pa_select=1)
-#lora.set_rx_crc(True)
-#lora.set_coding_rate(CODING_RATE.CR4_6)
-#lora.set_pa_config(max_power=0, output_power=0)
-#lora.set_lna_gain(GAIN.G1)
-#lora.set_implicit_header_mode(False)
-#lora.set_low_data_rate_optim(True)
-#lora.set_pa_ramp(PA_RAMP.RAMP_50_us)
-#lora.set_agc_auto_on(True)
+# lora.set_rx_crc(True)
+# lora.set_coding_rate(CODING_RATE.CR4_6)
+# lora.set_pa_config(max_power=0, output_power=0)
+# lora.set_lna_gain(GAIN.G1)
+# lora.set_implicit_header_mode(False)
+# lora.set_low_data_rate_optim(True)
+# lora.set_pa_ramp(PA_RAMP.RAMP_50_us)
+# lora.set_agc_auto_on(True)
 
 print(lora)
-assert(lora.get_agc_auto_on() == 1)
+assert lora.get_agc_auto_on() == 1
 
-try: input("Press enter to start...")
-except: pass
+try:
+    input("Press enter to start...")
+except:
+    pass
 
 try:
     lora.start()

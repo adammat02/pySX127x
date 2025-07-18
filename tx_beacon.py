@@ -31,8 +31,23 @@ from SX127x.board_config import BOARD
 BOARD.setup()
 
 parser = LoRaArgumentParser("A simple LoRa beacon")
-parser.add_argument('--single', '-S', dest='single', default=False, action="store_true", help="Single transmission")
-parser.add_argument('--wait', '-w', dest='wait', default=1, action="store", type=float, help="Waiting time between transmissions (default is 0s)")
+parser.add_argument(
+    "--single",
+    "-S",
+    dest="single",
+    default=False,
+    action="store_true",
+    help="Single transmission",
+)
+parser.add_argument(
+    "--wait",
+    "-w",
+    dest="wait",
+    default=1,
+    action="store",
+    type=float,
+    help="Waiting time between transmissions (default is 0s)",
+)
 
 
 class LoRaBeacon(LoRa):
@@ -42,7 +57,7 @@ class LoRaBeacon(LoRa):
     def __init__(self, verbose=False):
         super(LoRaBeacon, self).__init__(verbose)
         self.set_mode(MODE.SLEEP)
-        self.set_dio_mapping([1,0,0,0,0,0])
+        self.set_dio_mapping([1, 0, 0, 0, 0, 0])
 
     def on_rx_done(self):
         print("\nRxDone")
@@ -64,7 +79,7 @@ class LoRaBeacon(LoRa):
             sys.exit(0)
         BOARD.led_off()
         sleep(args.wait)
-        self.write_payload([0x0f])
+        self.write_payload([0x0F])
         BOARD.led_on()
         self.set_mode(MODE.TX)
 
@@ -93,36 +108,39 @@ class LoRaBeacon(LoRa):
         sys.stdout.write("\rstart")
         self.tx_counter = 0
         BOARD.led_on()
-        self.write_payload([0x0f])
+        self.write_payload([0x0F])
         self.set_mode(MODE.TX)
         while True:
             sleep(1)
+
 
 lora = LoRaBeacon(verbose=False)
 args = parser.parse_args(lora)
 
 lora.set_pa_config(pa_select=1)
-#lora.set_rx_crc(True)
-#lora.set_agc_auto_on(True)
-#lora.set_lna_gain(GAIN.NOT_USED)
-#lora.set_coding_rate(CODING_RATE.CR4_6)
-#lora.set_implicit_header_mode(False)
-#lora.set_pa_config(max_power=0x04, output_power=0x0F)
-#lora.set_pa_config(max_power=0x04, output_power=0b01000000)
-#lora.set_low_data_rate_optim(True)
-#lora.set_pa_ramp(PA_RAMP.RAMP_50_us)
+# lora.set_rx_crc(True)
+# lora.set_agc_auto_on(True)
+# lora.set_lna_gain(GAIN.NOT_USED)
+# lora.set_coding_rate(CODING_RATE.CR4_6)
+# lora.set_implicit_header_mode(False)
+# lora.set_pa_config(max_power=0x04, output_power=0x0F)
+# lora.set_pa_config(max_power=0x04, output_power=0b01000000)
+# lora.set_low_data_rate_optim(True)
+# lora.set_pa_ramp(PA_RAMP.RAMP_50_us)
 
 
 print(lora)
-#assert(lora.get_lna()['lna_gain'] == GAIN.NOT_USED)
-assert(lora.get_agc_auto_on() == 1)
+# assert(lora.get_lna()['lna_gain'] == GAIN.NOT_USED)
+assert lora.get_agc_auto_on() == 1
 
 print("Beacon config:")
 print("  Wait %f s" % args.wait)
 print("  Single tx = %s" % args.single)
 print("")
-try: input("Press enter to start...")
-except: pass
+try:
+    input("Press enter to start...")
+except:
+    pass
 
 try:
     lora.start()
