@@ -82,17 +82,10 @@ lora.set_coding_rate(CODING_RATE.CR4_6)     # set it to CR4_6
 
 Make sure SPI is activated on you RaspberryPi: [SPI](https://www.raspberrypi.org/documentation/hardware/raspberrypi/spi/README.md)
 **pySX127x** requires these two python packages:
-* [RPi.GPIO](https://pypi.python.org/pypi/RPi.GPIO") for accessing the GPIOs, it should be already installed on
-  a standard Raspian Linux image
+* [gpiozero](https://pypi.org/project/gpiozero) for accessing the GPIOs
 * [spidev](https://pypi.python.org/pypi/spidev) for controlling SPI
 
-In order to install spidev download the source code and run setup.py manually:
-```bash
-wget https://pypi.python.org/packages/source/s/spidev/spidev-3.1.tar.gz
-tar xfvz  spidev-3.1.tar.gz
-cd spidev-3.1
-sudo python setup.py install
-```
+
 
 At this point you may want to confirm that the unit tests pass. See the section [Tests](#tests) below.
 
