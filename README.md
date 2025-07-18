@@ -3,58 +3,23 @@
 This is a python interface to the [Semtech SX1276/7/8/9](http://www.semtech.com/wireless-rf/rf-transceivers/) 
 long range, low power transceiver family.
 
-The SX127x have both LoRa and FSK capabilities. Here the focus lies on the
-LoRa spread spectrum modulation hence only the LoRa modem interface is implemented so far 
-(but see the [roadmap](#roadmap) below for future plans).
-
-Spread spectrum modulation has a number of intriguing features:
-* High interference immunity
-* Up to 20dBm link budget advantage (for the SX1276/7/8/9)
-* High Doppler shift immunity
-
-More information about LoRa can be found on the [LoRa Alliance website](https://lora-alliance.org).
-Links to some LoRa performance reports can be found in the [references](#references) section below.
-
-
-# Motivation
-
-Transceiver modules are usually interfaced with microcontroller boards such as the 
-Arduino and there are already many fine C/C++ libraries for the SX127x family available on 
-[github](https://github.com/search?q=sx127x) and [mbed.org](https://developer.mbed.org/search/?q=sx127x).
-
-Although C/C++ is the de facto standard for development on microcontrollers, [python](https://www.python.org)
-running on a Raspberry Pi (NanoPi, BananaPi, UDOO Neo, BeagleBoard, etc. etc.) is becoming a viable alternative for rapid prototyping.
-
-High level programming languages like python require a full-blown OS such as Linux. (There are some exceptions like
-[MicroPython](https://micropython.org) and its fork [CircuitPython](https://www.adafruit.com/circuitpython).)
-But using hardware capable of running Linux contradicts, to some extent, the low power specification of the SX127x family.
-Therefore it is clear that this approach aims mostly at prototyping and technology testing.
-
-Prototyping on a full-blown OS using high level programming languages has several clear advantages:
-* Working prototypes can be built quickly 
-* Technology testing ist faster
-* Proof of concept is easier to achieve
-* The application development phase is reached quicker 
+This project is forked from [https://github.com/mayeranalytics/pySX127x](https://github.com/mayeranalytics/pySX127x)
 
 
 # Hardware
 
-The transceiver module is a SX1276 based Modtronix [inAir9B](https://web.archive.org/web/20200926024317/https://modtronix.com/inair9.html). 
-It is mounted on a prototyping board to a Raspberry Pi rev 2 model B.
+The transceiver module is an SX1278-based **Ai-Thinker RA-02** LoRa module.  
+It is connected to a **Raspberry Pi 5**, using the **GPIO numbering** scheme.  
 
-| Proto board pin | RaspPi GPIO | Direction |
-|:----------------|:-----------:|:---------:|
-| inAir9B DIO0    | GPIO 22     |    IN     |
-| inAir9B DIO1    | GPIO 23     |    IN     |
-| inAir9B DIO2    | GPIO 24     |    IN     |
-| inAir9B DIO3    | GPIO 25     |    IN     |
-| inAir9b Reset   | GPIO ?      |    OUT    |
-| LED             | GPIO 18     |    OUT    |
-| Switch          | GPIO 4      |    IN     |
+| Function       | RaspPi GPIO (BCM) | Direction | Description                |
+|----------------|------------------|-----------|-----------------------------|
+| RA-02 DIO0     | GPIO 22          | IN        | Interrupt input from RA-02  |
+| RA-02 DIO1     | GPIO 23          | IN        | Interrupt input from RA-02  |
+| RA-02 DIO2     | GPIO 24          | IN        | Interrupt input from RA-02  |
+| RA-02 DIO3     | GPIO 25          | IN        | Interrupt input from RA-02  |
+| RA-02 RESET    | GPIO 27          | OUT       | Reset line for RA-02        |
+| LED            | GPIO 13          | OUT       | Status LED                  |
 
-Todo:
-- [ ] Add picture(s)
-- [ ] Wire the SX127x reset to a GPIO?
 
 
 # Code Examples
@@ -233,18 +198,6 @@ optional arguments:
 
 Execute `test_lora.py` to run a few unit tests. 
 
-
-# Contributors
-
-Please feel free to comment, report issues, or contribute!
-
-Contact me via my company website [Mayer Analytics](http://mayeranalytics.com) and my private blog
-[mcmayer.net](http://mcmayer.net). 
-
-Follow me on twitter [@markuscmayer](https://twitter.com/markuscmayer) and
-[@mayeranalytics](https://twitter.com/mayeranalytics).
-
-
 # Roadmap
 
 95% of functions for the Sx127x LoRa capabilities are implemented. Functions will be added when necessary.
@@ -290,30 +243,3 @@ By the way, LoRaWAN is what you need when you want to talk to the [TheThingsNetw
 * [Theory of Spread-Spectrum Communications-A Tutorial](http://www.fer.unizg.hr/_download/repository/Theory%20of%20Spread-Spectrum%20Communications-A%20Tutorial.pdf)
 (technical paper)
 
-
-# Copyright and License
-
-&copy; 2015 Mayer Analytics Ltd., All Rights Reserved.
-
-### Short version
-The license is [GNU AGPL](http://www.gnu.org/licenses/agpl-3.0.en.html).
-
-### Long version
-pySX127x is free software: you can redistribute it and/or modify it under the terms of the 
-GNU Affero General Public License as published by the Free Software Foundation, 
-either version 3 of the License, or (at your option) any later version.
-
-pySX127x is distributed in the hope that it will be useful, 
-but WITHOUT ANY WARRANTY; without even the implied warranty of 
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
-See the GNU Affero General Public License for more details.
-
-You can be released from the requirements of the license by obtaining a commercial license. 
-Such a license is mandatory as soon as you develop commercial activities involving 
-pySX127x without disclosing the source code of your own applications, or shipping pySX127x with a closed source product.
-
-You should have received a copy of the GNU General Public License
-along with pySX127.  If not, see <http://www.gnu.org/licenses/>.
-
-# Other legal boredom
-LoRa, LoRaWAN, LoRa Alliance are all trademarks by ... someone.
